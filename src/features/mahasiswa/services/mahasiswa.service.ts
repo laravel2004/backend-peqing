@@ -1,13 +1,15 @@
 import { MahasiswaCreateDto, MahasiswaCsvCreateDto } from "../dto/mahasiswa.create.dto";
 import { MahasiswaRepository } from "../repositories/mahasiswa.repository";
 import fs from "fs";
-import csvParser from "csv-parser";
 import { UserCreateDto } from "../../auth/dto/user.create.dto";
 import { AuthRepository } from "../../auth/repositories/auth.repository";
 import { hash } from "bcrypt";
 import csv from 'csv-parser';
 import { Mahasiswa } from "@prisma/client";
 import { MahasiswaDto } from "../dto/mahasiswa.dto";
+import { MahasiswaUpdateDto, MahasiswaUserUpdateDto } from "../dto/mahasiswa.update.dto";
+import { UserDataDto } from "../../auth/dto/user.data.dto";
+import * as jwt from "jsonwebtoken";
 
 export class MahasiswaService {
 
@@ -36,7 +38,7 @@ export class MahasiswaService {
             const mahasiswasCreated: Mahasiswa[] = [];
 
             for (const data of mahasiswas) {
-              const password = await hash(data.nrp, 10);
+              const password = await hash(data.password, 10);
               const user: UserCreateDto = {
                 name: data.name,
                 email: data.email,
@@ -89,6 +91,110 @@ export class MahasiswaService {
     }
     catch(e : any) {
       throw new Error(e.message);
+    }
+  }
+
+  async get() : Promise<MahasiswaDto[]> {
+    try{
+      const data = await this.mahasiswaRepository.get();
+      return data.map((mahasiswa) => ({
+        departement: mahasiswa.departement,
+        id: mahasiswa.id,
+        jurusan: mahasiswa.jurusan,
+        nrp: mahasiswa.nrp,
+        qr: mahasiswa.qr,
+        userId: mahasiswa.userId,
+        user : {
+          email: mahasiswa.user.email,
+          id: mahasiswa.user.id,
+          name: mahasiswa.user.name
+        }
+      }));
+    }
+    catch(e:any) {
+      throw new Error(e.message);
+    }
+  }
+
+  async update(update : MahasiswaUserUpdateDto) : Promise<MahasiswaUserUpdateDto> {
+    try{
+      const mahasiswa : MahasiswaUpdateDto = {
+        id: update.id,
+        jurusan: update.jurusan,
+        departement: update.departement,
+        nrp: update.nrp,
+      }
+
+      const user : UserDataDto = {
+        email: update.user.email,
+        id: update.user.id,
+        name: update.user.name
+      }
+
+      const mahasiswaUpdated = await this.mahasiswaRepository.update(mahasiswa);
+      if(mahasiswaUpdated) {
+        const userUpdated = await this.authRepository.update(user);
+        if(userUpdated) {
+          return {
+            departement: mahasiswaUpdated.departement,
+            id: mahasiswaUpdated.id,
+            jurusan: mahasiswaUpdated.jurusan,
+            nrp: mahasiswaUpdated.nrp,
+            userId: userUpdated.id,
+            user : {
+              email: userUpdated.email,
+              id: userUpdated.id,
+              name: userUpdated.name
+            }
+          }
+        }
+        throw new Error('User not found');
+      }
+      throw new Error('Mahasiswa not found');
+
+    }
+    catch(e:any) {
+      throw new Error(e.message);
+    }
+  }
+
+  async delete(id : number) : Promise<Mahasiswa> {
+    try{
+      const data = await this.mahasiswaRepository.delete(id);
+      if(data) {
+        await this.authRepository.delete(data.userId);
+        return data;
+      }
+      throw new Error('Mahasiswa not found');
+    }
+    catch(e:any) {
+      throw new Error(e.message);
+    }
+  }
+
+  async me (token : string) : Promise<MahasiswaUserUpdateDto> {
+    try{
+      const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
+      const payload = decoded as { id: number };
+      const data = await this.mahasiswaRepository.findByUserId(payload.id);
+      if(!data) {
+        throw new Error('User not found');
+      }
+      return {
+        departement: data.departement,
+        id: data.id,
+        jurusan: data.jurusan,
+        nrp: data.nrp,
+        userId: data.userId,
+        user : {
+          email: data.user.email,
+          id: data.user.id,
+          name: data.user.name
+        }
+      }
+    }
+    catch(e : any) {
+      throw new Error('Server Internal Error');
     }
   }
 }

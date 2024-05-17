@@ -18,8 +18,8 @@ model User {
   name String 
   email String @unique
   password String
-  dosen Dosen[]
-  mahasiswa Mahasiswa[]
+  dosen Dosen?
+  mahasiswa Mahasiswa?
 }
 
 model Matakuliah {
@@ -30,7 +30,7 @@ model Matakuliah {
 
 model Mahasiswa {
   id Int @id @default(autoincrement())
-  userId Int
+  userId Int @unique
   nrp String
   qr String
   jurusan String
@@ -42,7 +42,7 @@ model Mahasiswa {
 
 model Dosen {
   id Int @id @default(autoincrement())
-  userId Int
+  userId Int @unique
   nip String
   user User @relation(fields: [userId], references: [id])
   subKelas SubKelas[]

@@ -1,5 +1,6 @@
 import { PrismaClient, User } from "@prisma/client";
 import { UserCreateDto } from "../dto/user.create.dto";
+import { UserDataDto } from "../dto/user.data.dto";
 
 export class AuthRepository {
 
@@ -50,6 +51,33 @@ export class AuthRepository {
     }
     catch(e) {
       throw new Error('Server Internal Error');
+    }
+  }
+
+  async update(user : UserDataDto) : Promise<User> {
+    try{
+      return await this.prisma.user.update({
+        where: {
+          id: user.id
+        },
+        data: user
+      })
+    }
+    catch(e) {
+      throw new Error('Server Internal Error');
+    }
+  }
+
+  async delete(id : number) : Promise<User> {
+    try{
+      return await this.prisma.user.delete({
+        where: {
+          id: id
+        }
+      })
+    }
+    catch(e:any) {
+      throw new Error(e.message);
     }
   }
 

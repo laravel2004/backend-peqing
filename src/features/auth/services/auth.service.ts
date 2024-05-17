@@ -15,11 +15,14 @@ export class AuthService {
 
   async login(user : UserShowDto) : Promise<string> {
     try{
+      // console.log(user)
       const userExist = await this.authRepository.login(user.email);
+      console.log(userExist)
       if(!userExist) {
         throw new Error('User not found');
       }
       const isMatch = await compare(user.password, userExist.password);
+      console.log(isMatch)
       if(!isMatch) {
         throw new Error('Password not match');
       }
