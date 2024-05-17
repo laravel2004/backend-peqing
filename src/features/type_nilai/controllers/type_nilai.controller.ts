@@ -60,12 +60,11 @@ export class TypeNilaiController {
     try {
       const { name, matakuliahId } = req.body
       const { id } = req.params;
-      if(!id || !name || !matakuliahId) return res.status(400).json({status : "error", message : "data not found"})
+      if(!id || !name) return res.status(400).json({status : "error", message : "data not found"})
 
       const update : TypeNilaiUpdateDto = {
         id : Number(id),
         name : name,
-        matakuliahId : matakuliahId
       }
       
       const data = await this.typeNilaiService.update(update);

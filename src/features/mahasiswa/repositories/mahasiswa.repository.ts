@@ -15,7 +15,7 @@ export class MahasiswaRepository {
       return await this.prisma.mahasiswa.findMany({
         include: {
           user: true
-        }
+        },
       });
     } catch (e: any) {
       throw new Error(e.message);

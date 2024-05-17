@@ -21,6 +21,45 @@ export class MahasiswaService {
     this.authRepository = new AuthRepository();
   }
 
+  async create(mhs : MahasiswaCsvCreateDto) : Promise<MahasiswaDto> {
+    try {
+      const hashPassword = await hash(mhs.password, 10);
+      const user : UserCreateDto = {
+        name : mhs.name,
+        email : mhs.email,
+        password : hashPassword
+      }
+
+      const userCreated = await this.authRepository.register(user);
+      const mahasiswa : MahasiswaCreateDto = {
+        nrp : mhs.nrp,
+        jurusan : mhs.jurusan,
+        departement : mhs.departement,
+        qr : await hash(mhs.nrp, 10),
+        userId : userCreated.id
+      }
+
+      const mahasiswaCreated = await this.mahasiswaRepository.create(mahasiswa);
+      return {
+        departement : mahasiswaCreated.departement,
+        id : mahasiswaCreated.id,
+        jurusan : mahasiswaCreated.jurusan,
+        nrp : mahasiswaCreated.nrp,
+        qr : mahasiswaCreated.qr,
+        userId : mahasiswaCreated.userId,
+        user : {
+          email : userCreated.email,
+          name : userCreated.name,
+          id : userCreated.id
+        }
+      }
+    }
+    catch(e:any) {
+      throw new Error(e.message);
+    } 
+
+  }
+
   async createMany(filePath: string): Promise<Mahasiswa[]> {
     const mahasiswas: MahasiswaCsvCreateDto[] = [];
 

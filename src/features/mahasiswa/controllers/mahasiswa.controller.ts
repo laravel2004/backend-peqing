@@ -11,6 +11,28 @@ export class MahasiswaController {
     this.mahasiswaService = new MahasiswaService();
   }
 
+  async create(req :Request,res :Response) {
+    try {
+      const {name, email, password, departement, jurusan, nrp} = req.body;
+      if(!name || !email || !password || !departement || !jurusan || !nrp) return res.status(400).json({
+        status : "error",
+        message : "Field not completed"
+      });
+
+      const data = await this.mahasiswaService.create(req.body);
+      return res.status(201).json({
+        status : "succes",
+        message : "Mahasiswa has created"
+      })
+    }
+    catch(e:any) {
+      return res.status(500).json ({
+        status : "error",
+        message : e.message
+      })
+    }
+  }
+
   async createMany(req:Request, res : Response) {
     try{
       console.log(req.file)
@@ -24,7 +46,7 @@ export class MahasiswaController {
       const data = await this.mahasiswaService.createMany(req.file.path);
       return res.status(200).json({
         status : 'success',
-        message : data,
+        message : "All mahasiswa has created"
       })
     }
     catch(e:any) {
