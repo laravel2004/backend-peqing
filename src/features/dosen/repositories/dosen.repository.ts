@@ -83,4 +83,23 @@ export class DosenRepository {
     }
   }
 
+  async findByUserId (id : number) : Promise<DosenDto> {
+    try {
+      const dosen = await this.prisma.dosen.findUnique({
+        include: {
+          user: true
+        },
+        where: {
+          userId: id
+        }
+      })
+      if(!dosen) {
+        throw new Error('dosen not found');
+      }
+      return dosen
+    } catch (e: any) {
+      throw new Error("amada");
+    }
+  }
+
 }

@@ -138,7 +138,7 @@ export class DosenService {
         nip: dosen.nip
       };
       const user: UserDataDto = {
-        id : dosen.id,
+        id : dosen.user.id,
         name : dosen.user.name,
         email : dosen.user.email
       }
@@ -183,9 +183,10 @@ export class DosenService {
 
   async me(token : string) : Promise<DosenDto> {
     try{ 
+      console.log(token)
       const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
       const payload = decoded as { id: number };
-      const  data = await this.dosenRepository.findId(payload.id);
+      const  data = await this.dosenRepository.findByUserId(payload.id)
       if(!data) throw new Error("Dosen Not Founds")
       return {
         nip : data.nip,

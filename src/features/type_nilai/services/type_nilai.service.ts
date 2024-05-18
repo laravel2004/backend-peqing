@@ -29,9 +29,9 @@ export class TypeNilaiService {
     }
   }
 
-  async findByMatakuliahId(matakuliahId : number) : Promise<TypeNilai[]> {
+  async findByKelasId(kelasId : number) : Promise<TypeNilai[]> {
     try {
-      return await this.typeNilaiRepository.findByMatakuliahId(matakuliahId);
+      return await this.typeNilaiRepository.findByKelasId(kelasId);
     }
     catch(e : any) {
       throw new Error(e.message);

@@ -19,23 +19,44 @@ export class TypeNilaiRepository {
     }
   }
 
-  async findByMatakuliahId(matakuliahId : number) : Promise<TypeNilai[]> {
-    try{
-      const data = await this.prisma.typeNilai.findMany({
-        where: {
-          matakuliahId: matakuliahId
+  async findByKelasId(kelasId : number) : Promise<TypeNilai[]> {
+    try {
+      return await this.prisma.typeNilai.findMany({
+        where : {
+          kelasId : kelasId
         }
       })
-
-      if(!data) {
-        throw new Error('TypeNilai not found');
-      }
-      return data;
     }
-    catch(e:any) {
-      throw new Error(e.message);
+    catch(e) {
+      throw new Error((e as Error).message)
     }
   }
+
+  async create(tk : TypeNilaiCreateDto) : Promise<TypeNilai> {
+    try{
+      return await this.prisma.typeNilai.create({
+        data : tk
+      })
+    }
+    catch(e) {
+      throw new Error((e as Error).message)
+    }
+  }
+
+  async update(tku : TypeNilaiUpdateDto) :Promise<TypeNilai> {
+    try{
+      return await this.prisma.typeNilai.update({
+        where : {
+          id : tku.id
+        },
+        data : tku
+      })
+    }
+    catch(e) {
+      throw new Error((e as Error).message);
+    }
+  }
+
 
   async findId(id: number) : Promise<TypeNilai> {
     try{
@@ -52,33 +73,6 @@ export class TypeNilaiRepository {
       return data;
     }
     catch(e:any) {
-      throw new Error(e.message);
-    }
-  }
-
-  async create(typeNilai : TypeNilaiCreateDto) : Promise<TypeNilai> {
-    try{
-      const data = await this.prisma.typeNilai.create({
-        data: typeNilai
-      })
-      return data;
-    }
-    catch(e : any) {
-      throw new Error(e.message)
-    } 
-  }
-
-  async update(update : TypeNilaiUpdateDto) : Promise<TypeNilai> {
-    try {
-      const data = await this.prisma.typeNilai.update({
-        where: {
-          id: update.id
-        },
-        data: update
-      })
-      return data;
-    }
-    catch(e : any) {
       throw new Error(e.message);
     }
   }

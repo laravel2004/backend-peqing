@@ -25,7 +25,7 @@ model User {
 model Matakuliah {
   id Int @id @default(autoincrement())
   name String
-  typeNilai TypeNilai[]
+  kelas Kelas[]
 }
 
 model Mahasiswa {
@@ -45,31 +45,26 @@ model Dosen {
   userId Int @unique
   nip String
   user User @relation(fields: [userId], references: [id])
-  subKelas SubKelas[]
+  kelas Kelas[]
 }
 
 model Kelas {
   id Int @id @default(autoincrement())
   matakuliahId Int
   name String
-}
-
-model SubKelas {
-  id Int @id @default(autoincrement())
-  name String
   dosenId Int
   dosen Dosen @relation(fields: [dosenId], references: [id])
+  matakuliah Matakuliah @relation(fields: [matakuliahId], references: [id])
   anggotaKelas AnggotaKelas[]
+  typeNilai TypeNilai[]
+  nilai Nilai[]
 }
-
-
 
 model AnggotaKelas {
   id Int @id @default(autoincrement())
   kelasId Int
   mahasiswaId Int
-  subKelasId Int
-  subKelas SubKelas @relation(fields: [subKelasId], references: [id])
+  kelas Kelas @relation(fields: [kelasId], references: [id])
   mahasiswa Mahasiswa @relation(fields: [mahasiswaId], references: [id])
 }
 
@@ -79,12 +74,14 @@ model Nilai {
   grade String
   mahasiswaId Int
   typeNilaiId Int
+  kelasId Int
+  kelas Kelas @relation(fields: [kelasId], references: [id])
   mahasiswa Mahasiswa @relation(fields: [mahasiswaId], references: [id])
 }
 
 model TypeNilai {
   id Int @id @default(autoincrement())
   name String
-  matakuliahId Int
-  matakuliah Matakuliah @relation(fields: [matakuliahId], references: [id])
+  kelasId Int
+  kelas Kelas @relation(fields: [kelasId], references: [id])
 }

@@ -5,6 +5,7 @@ import mkRouter from "./routes/matakuliah.route";
 import typeNilaiRouter from "./routes/type_nilai.route";
 import mahasiswaRouter from "./routes/mahasiswa.route";
 import dosenRouter from "./routes/dosen.route";
+import kelasRouter from "./routes/kelas.route";
 dotenv.config();
 
 const app: Express = express();
@@ -17,6 +18,7 @@ app.use('/matakuliah', mkRouter);
 app.use('/type-nilai', typeNilaiRouter);
 app.use('/mahasiswa', mahasiswaRouter);
 app.use('/dosen', dosenRouter);
+app.use('/kelas', kelasRouter);
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);

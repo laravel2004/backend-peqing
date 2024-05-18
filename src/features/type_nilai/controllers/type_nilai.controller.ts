@@ -32,11 +32,11 @@ export class TypeNilaiController {
     }
   }
 
-  async findByMatakuliahId(req : Request, res : Response) {
+  async findByKelasId(req : Request, res : Response) {
     try {
       const { id } = req.params
       if(!id) return res.status(400).json({status : "error", message : "data not found"})
-      const data = await this.typeNilaiService.findByMatakuliahId(Number(id));
+      const data = await this.typeNilaiService.findByKelasId(Number(id));
       return res.status(200).json({status : "succes", message : data})
     }
     catch(e:any) {

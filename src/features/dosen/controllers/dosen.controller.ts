@@ -31,7 +31,7 @@ export class DosenController {
       })
       await this.dosenService.create(req.body);
       return res.status(201).json({
-        status : "error",
+        status : "succes",
         message : "Dosen has created"
       });
     }
@@ -88,8 +88,9 @@ export class DosenController {
 
   async me (req : Request, res : Response) {
     try{
-      const headers = req.headers.authorization;
-      const token = headers?.split(" ")[1];
+      const header = req.headers.authorization;
+      console.log(header)
+      const token = header?.split(" ")[1];
       const data = await this.dosenService.me(token as string);
       return res.status(200).json({
         status : "succes",
