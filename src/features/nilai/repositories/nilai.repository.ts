@@ -45,4 +45,85 @@ export class NilaiRepository {
     }
   } 
 
+  async findByMahasiswa (mahasiswaId : number, kelasId : number) : Promise<NilaiShowDto[]> {
+    try{
+      const data = await this.prisma.nilai.findMany({
+        where : {
+          AND : [
+           {
+            mahasiswaId : mahasiswaId,
+           },
+           {
+            kelasId : kelasId
+           }
+          ]
+        },
+        include : {
+          mahasiswa : {
+            include : {
+              user : true
+            }
+          },
+          typeNilai : true
+        }
+      })
+
+      return data.map((nilai) => ({
+        id : nilai.id,
+        grade : nilai.grade,
+        nilai : nilai.nilai,
+        kelasId : nilai.kelasId,
+        mahasiswa : {
+          id : nilai.mahasiswa.id,
+          name : nilai.mahasiswa.user.name,
+          userId : nilai.mahasiswa.userId
+        },
+        typeNilai : {
+          id : nilai.typeNilaiId,
+          name : nilai.typeNilai.name
+        }
+      }))
+    }
+    catch(e) {
+      throw new Error((e as Error).message)
+    }
+  }
+
+  async findByKelasId(kelasId : number) : Promise<NilaiShowDto[]> {
+    try{
+      const data = await this.prisma.nilai.findMany({
+        where : {
+          kelasId : kelasId
+        },
+        include : {
+          mahasiswa : {
+            include : {
+              user : true
+            }
+          },
+          typeNilai : true
+        }
+      })
+
+      return data.map((nilai) => ({
+        id : nilai.id,
+        grade : nilai.grade,
+        nilai : nilai.nilai,
+        kelasId : nilai.kelasId,
+        mahasiswa : {
+          id : nilai.mahasiswa.id,
+          name : nilai.mahasiswa.user.name,
+          userId : nilai.mahasiswa.userId
+        },
+        typeNilai : {
+          id : nilai.typeNilaiId,
+          name : nilai.typeNilai.name
+        }
+      }))
+    }
+    catch(e) {
+      throw new Error((e as Error).message);
+    }
+  }
+
 }

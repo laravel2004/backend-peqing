@@ -6,12 +6,20 @@ import typeNilaiRouter from "./routes/type_nilai.route";
 import mahasiswaRouter from "./routes/mahasiswa.route";
 import dosenRouter from "./routes/dosen.route";
 import kelasRouter from "./routes/kelas.route";
+import path from "path";
+import fs from 'fs'
 dotenv.config();
 
 const app: Express = express();
 const port = process.env.PORT || 3000;
 
+export const publicDir = path.join(__dirname, 'public');
+if (!fs.existsSync(publicDir)) {
+    fs.mkdirSync(publicDir);
+}
+
 app.use(express.urlencoded({ extended: true }));
+app.use('/static', express.static(path.join(__dirname, 'public')))
 app.use(express.json());
 app.use('/auth', userRouter);
 app.use('/matakuliah', mkRouter);

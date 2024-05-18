@@ -31,7 +31,7 @@ model Matakuliah {
 model Mahasiswa {
   id Int @id @default(autoincrement())
   userId Int @unique
-  nrp String
+  nrp String @unique
   qr String
   jurusan String
   departement String

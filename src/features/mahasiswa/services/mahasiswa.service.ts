@@ -5,21 +5,25 @@ import { UserCreateDto } from "../../auth/dto/user.create.dto";
 import { AuthRepository } from "../../auth/repositories/auth.repository";
 import { hash } from "bcrypt";
 import csv from 'csv-parser';
-import { Mahasiswa } from "@prisma/client";
+import { Mahasiswa, PrismaClient } from "@prisma/client";
 import { MahasiswaDto } from "../dto/mahasiswa.dto";
 import { MahasiswaUpdateDto, MahasiswaUserUpdateDto } from "../dto/mahasiswa.update.dto";
 import { UserDataDto } from "../../auth/dto/user.data.dto";
 import * as jwt from "jsonwebtoken";
 import * as qr from "qrcode";
+import path from "path";
+import { publicDir } from "../../..";
 
 export class MahasiswaService {
 
   private readonly mahasiswaRepository : MahasiswaRepository;
   private readonly authRepository : AuthRepository;
+  private readonly prisma : PrismaClient;
 
   constructor() {
     this.mahasiswaRepository = new MahasiswaRepository();
     this.authRepository = new AuthRepository();
+    this.prisma = new PrismaClient();
   }
 
   async create(mhs : MahasiswaCsvCreateDto) : Promise<MahasiswaDto> {
@@ -36,11 +40,33 @@ export class MahasiswaService {
         nrp : mhs.nrp,
         jurusan : mhs.jurusan,
         departement : mhs.departement,
-        qr : await qr.toDataURL(mhs.nrp),
+        qr : "",
         userId : userCreated.id
       }
 
-      const mahasiswaCreated = await this.mahasiswaRepository.create(mahasiswa);
+      const mahasiswaCreate = await this.mahasiswaRepository.create(mahasiswa);
+      qr.toFile(path.join(publicDir, `${mahasiswaCreate.id}.png`), mahasiswaCreate.id.toString(), function (err) {
+        if (err) {
+            console.error('Error generating QR code:', err);
+        } else {
+            console.log('QR code has been saved!');
+    
+            // Memastikan file benar-benar ada
+            const filePath = path.join(publicDir, `${mahasiswaCreate.id}.png`);
+            fs.access(filePath, fs.constants.F_OK, (err) => {
+                console.log(err ? 'File does not exist' : 'File exists');
+            });
+        }
+      });
+
+      const mahasiswaCreated = await this.prisma.mahasiswa.update({
+        where : {
+          id : mahasiswaCreate.id
+        },
+        data : {
+          qr : `${mahasiswaCreate.id.toString()}.png`
+        }
+      })
       return {
         departement : mahasiswaCreated.departement,
         id : mahasiswaCreated.id,
@@ -95,8 +121,30 @@ export class MahasiswaService {
                 userId: userCreated.id,
               };
 
-              const mahasiswaCreated = await this.mahasiswaRepository.create(mahasiswa);
-              mahasiswasCreated.push(mahasiswaCreated);
+              const mahasiswaCreate = await this.mahasiswaRepository.create(mahasiswa);
+              mahasiswasCreated.push(mahasiswaCreate);
+              qr.toFile(path.join(publicDir, `${mahasiswaCreate.id}.png`), mahasiswaCreate.id.toString(), function (err) {
+                if (err) {
+                    console.error('Error generating QR code:', err);
+                } else {
+                    console.log('QR code has been saved!');
+            
+                    // Memastikan file benar-benar ada
+                    const filePath = path.join(publicDir, `${mahasiswaCreate.id}.png`);
+                    fs.access(filePath, fs.constants.F_OK, (err) => {
+                        console.log(err ? 'File does not exist' : 'File exists');
+                    });
+                }
+              });
+        
+              await this.prisma.mahasiswa.update({
+                where : {
+                  id : mahasiswaCreate.id
+                },
+                data : {
+                  qr : `${mahasiswaCreate.id.toString()}.png`
+                }
+              })
             }
 
             fs.unlinkSync(filePath);
