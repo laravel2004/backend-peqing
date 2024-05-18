@@ -78,7 +78,7 @@ export class MahasiswaRepository {
     }
   }
 
-  async findByUserId (id : number) : Promise<MahasiswaUserUpdateDto> {
+  async findByUserId (id : number) : Promise<MahasiswaDto> {
     try {
       const mahasiswa = await this.prisma.mahasiswa.findUnique({
         include: {

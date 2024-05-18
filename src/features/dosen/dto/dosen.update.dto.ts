@@ -1,6 +1,5 @@
 export type DosenUpdateDto = {
   id : number;
-  userId : number;
   nip : string
 }
 

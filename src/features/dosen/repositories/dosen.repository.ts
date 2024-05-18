@@ -35,11 +35,14 @@ export class DosenRepository {
     }
   }
 
-  async findId(id : number) : Promise<Dosen> {
+  async findId(id : number) : Promise<DosenDto> {
     try{
       const dosen = await this.prisma.dosen.findUnique({
         where: {
           id: id
+        },
+        include: {
+          user: true
         }
       })
 

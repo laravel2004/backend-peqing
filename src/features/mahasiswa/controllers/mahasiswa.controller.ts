@@ -110,7 +110,6 @@ export class MahasiswaController {
   async me(req : Request, res : Response) {
     try{
       const headers = req.headers.authorization;
-      console.log(headers)
       const token = headers?.split(" ")[1];
       console.log(token)
       const user = await this.mahasiswaService.me(token as string);

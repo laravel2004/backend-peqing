@@ -10,6 +10,7 @@ import { MahasiswaDto } from "../dto/mahasiswa.dto";
 import { MahasiswaUpdateDto, MahasiswaUserUpdateDto } from "../dto/mahasiswa.update.dto";
 import { UserDataDto } from "../../auth/dto/user.data.dto";
 import * as jwt from "jsonwebtoken";
+import * as qr from "qrcode";
 
 export class MahasiswaService {
 
@@ -35,7 +36,7 @@ export class MahasiswaService {
         nrp : mhs.nrp,
         jurusan : mhs.jurusan,
         departement : mhs.departement,
-        qr : await hash(mhs.nrp, 10),
+        qr : await qr.toDataURL(mhs.nrp),
         userId : userCreated.id
       }
 
@@ -85,7 +86,7 @@ export class MahasiswaService {
               };
 
               const userCreated = await this.authRepository.register(user);
-              const qrGenerate = await hash(data.nrp, 10);
+              const qrGenerate = await qr.toDataURL(data.nrp);
               const mahasiswa: MahasiswaCreateDto = {
                 nrp: data.nrp,
                 jurusan: data.jurusan,
@@ -211,7 +212,7 @@ export class MahasiswaService {
     }
   }
 
-  async me (token : string) : Promise<MahasiswaUserUpdateDto> {
+  async me (token : string) : Promise<MahasiswaDto> {
     try{
       const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
       const payload = decoded as { id: number };
@@ -224,6 +225,7 @@ export class MahasiswaService {
         id: data.id,
         jurusan: data.jurusan,
         nrp: data.nrp,
+        qr: data.qr,
         userId: data.userId,
         user : {
           email: data.user.email,
