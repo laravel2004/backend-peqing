@@ -75,6 +75,7 @@ model Nilai {
   mahasiswaId Int
   typeNilaiId Int
   kelasId Int
+  typeNilai TypeNilai @relation(fields: [typeNilaiId], references: [id])
   kelas Kelas @relation(fields: [kelasId], references: [id])
   mahasiswa Mahasiswa @relation(fields: [mahasiswaId], references: [id])
 }
@@ -83,5 +84,6 @@ model TypeNilai {
   id Int @id @default(autoincrement())
   name String
   kelasId Int
+  nilai Nilai[]
   kelas Kelas @relation(fields: [kelasId], references: [id])
 }
