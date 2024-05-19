@@ -9,6 +9,7 @@ import kelasRouter from "./routes/kelas.route";
 import path from "path";
 import fs from 'fs'
 import nilaiRouter from "./routes/nilai.route";
+import anggotaRouter from "./routes/anggota.route";
 dotenv.config();
 
 const app: Express = express();
@@ -29,6 +30,7 @@ app.use('/mahasiswa', mahasiswaRouter);
 app.use('/dosen', dosenRouter);
 app.use('/kelas', kelasRouter);
 app.use('/nilai', nilaiRouter);
+app.use('/anggota', anggotaRouter);
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);

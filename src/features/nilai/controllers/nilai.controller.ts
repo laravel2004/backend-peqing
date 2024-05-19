@@ -20,7 +20,7 @@ export class NilaiController {
       });
       const nilaiCreate : NilaiCreateDto = {
         ...req.body,
-        kelasId : kelasId,
+        kelasId : Number(kelasId),
         grade : ''
       }
 
