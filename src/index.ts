@@ -10,6 +10,7 @@ import path from "path";
 import fs from 'fs'
 import nilaiRouter from "./routes/nilai.route";
 import anggotaRouter from "./routes/anggota.route";
+import { AuthMiddleware } from "./middlewares/auth.midleware";
 dotenv.config();
 
 const app: Express = express();
@@ -20,17 +21,19 @@ if (!fs.existsSync(publicDir)) {
     fs.mkdirSync(publicDir);
 }
 
+const authMiddleware = new AuthMiddleware();
+
 app.use(express.urlencoded({ extended: true }));
 app.use('/static', express.static(path.join(__dirname, 'public')))
 app.use(express.json());
 app.use('/auth', userRouter);
-app.use('/matakuliah', mkRouter);
-app.use('/type-nilai', typeNilaiRouter);
-app.use('/mahasiswa', mahasiswaRouter);
-app.use('/dosen', dosenRouter);
-app.use('/kelas', kelasRouter);
-app.use('/nilai', nilaiRouter);
-app.use('/anggota', anggotaRouter);
+app.use('/matakuliah', authMiddleware.verifyToken, mkRouter);
+app.use('/type-nilai', authMiddleware.verifyToken, typeNilaiRouter);
+app.use('/mahasiswa', authMiddleware.verifyToken, mahasiswaRouter);
+app.use('/dosen', authMiddleware.verifyToken, dosenRouter);
+app.use('/kelas', authMiddleware.verifyToken, kelasRouter);
+app.use('/nilai', authMiddleware.verifyToken, nilaiRouter);
+app.use('/anggota', authMiddleware.verifyToken, anggotaRouter);
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
