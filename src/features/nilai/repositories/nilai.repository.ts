@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { NilaiCreateDto } from "../dto/nilai.create.dto";
 import { NilaiShowDto } from "../dto/nilai.show.dto";
+import { NilaiUpdateDto } from "../dto/nilai.update.dto";
 
 export class NilaiRepository {
   private readonly prisma : PrismaClient;
@@ -123,6 +124,82 @@ export class NilaiRepository {
     }
     catch(e) {
       throw new Error((e as Error).message);
+    }
+  }
+
+  async update(nilai : NilaiUpdateDto) : Promise<NilaiShowDto> {
+    try {
+      const data = await this.prisma.nilai.update({
+        where : {
+          id : nilai.id
+        },
+        data : nilai,
+        include : {
+          mahasiswa : {
+            include : {
+              user : true
+            }
+          },
+          typeNilai : true
+        }
+      })
+
+      return {
+        id : data.id,
+        grade : data.grade,
+        kelasId : data.kelasId,
+        nilai : data.nilai,
+        mahasiswa : {
+          id : data.mahasiswa.id,
+          userId : data.mahasiswa.user.id,
+          name : data.mahasiswa.user.name
+        },
+        typeNilai : {
+          id : data.typeNilai.id,
+          name : data.typeNilai.name
+        }
+      }
+    }
+    catch(e) {
+      throw new Error((e as Error).message)
+    }
+  }
+
+  async delete (id : number) : Promise<NilaiShowDto> {
+    try{
+      const data = await this.prisma.nilai.delete({
+        where : {
+          id: id
+        }, 
+        include : {
+          mahasiswa : {
+            include : {
+              user : true
+            }
+          },
+          typeNilai : true
+        }
+      })
+
+      return {
+        id : data.id,
+        grade : data.grade,
+        kelasId : data.kelasId,
+        nilai : data.nilai,
+        mahasiswa : {
+          id : data.mahasiswa.id,
+          userId : data.mahasiswa.user.id,
+          name : data.mahasiswa.user.name
+        },
+        typeNilai : {
+          id : data.typeNilai.id,
+          name : data.typeNilai.name
+        }
+      }
+
+    }
+    catch(e) {
+      throw new Error((e as Error).message)
     }
   }
 
