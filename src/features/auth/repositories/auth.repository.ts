@@ -31,10 +31,19 @@ export class AuthRepository {
 
   async register (user : UserCreateDto) : Promise<User> {
     try {
-      console.log(user)
-      return await this.prisma.user.create({
-        data: user
+
+      const exist = await this.prisma.user.findUnique({
+        where: {
+          email : user.email
+        }
       })
+
+      if(!exist) {
+        return await this.prisma.user.create({
+          data: user
+        })
+      }
+      throw new Error("User already exist");
     }
     catch(e:Error | any) {
       throw new Error("Server Internal Error");
