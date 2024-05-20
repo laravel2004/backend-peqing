@@ -15,7 +15,7 @@ export class KelasRepository {
       return await this.prisma.kelas.findMany();
     }
     catch(e) {
-      throw new Error((e as Error).message);
+      throw new Error("Server Internal Error");
     }
   }
 
@@ -40,7 +40,7 @@ export class KelasRepository {
       return kelas
     }
     catch(e) {
-      throw new Error((e as Error).message);
+      throw new Error("Server Internal Error");
     } 
   }
 
@@ -62,7 +62,7 @@ export class KelasRepository {
       return kelas
     }
     catch(e) {
-      throw new Error((e as Error).message)
+      throw new Error("Server Internal Error")
     }
   }
 
@@ -98,7 +98,7 @@ export class KelasRepository {
       }
     }
     catch(e) {
-      throw new Error((e as Error).message)
+      throw new Error("Server Internal Error")
     }
   }
 
@@ -138,7 +138,7 @@ export class KelasRepository {
       }
     }
     catch(e) {
-      throw new Error((e as Error).message)
+      throw new Error("Server Internal Error")
     }
   }
 
@@ -177,7 +177,7 @@ export class KelasRepository {
       }
     }
     catch(e) {
-      throw new Error((e as Error).message)
+      throw new Error("Server Internal Error")
     }
   }
 

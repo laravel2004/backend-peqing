@@ -283,7 +283,7 @@ export class MahasiswaService {
       }
     }
     catch(e : any) {
-      throw new Error('Server Internal Error');
+      throw new Error((e as Error).message);
     }
   }
 }

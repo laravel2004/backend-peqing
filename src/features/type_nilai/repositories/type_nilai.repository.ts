@@ -15,7 +15,7 @@ export class TypeNilaiRepository {
       return await this.prisma.typeNilai.findMany();
     }
     catch(e:any) {
-      throw new Error(e.message);
+      throw new Error("Server Internal Error");
     }
   }
 
@@ -28,7 +28,7 @@ export class TypeNilaiRepository {
       })
     }
     catch(e) {
-      throw new Error((e as Error).message)
+      throw new Error("Server Internal Error")
     }
   }
 
@@ -39,7 +39,7 @@ export class TypeNilaiRepository {
       })
     }
     catch(e) {
-      throw new Error((e as Error).message)
+      throw new Error("Server Internal Error")
     }
   }
 
@@ -53,7 +53,7 @@ export class TypeNilaiRepository {
       })
     }
     catch(e) {
-      throw new Error((e as Error).message);
+      throw new Error("Server Internal Error");
     }
   }
 
@@ -73,7 +73,7 @@ export class TypeNilaiRepository {
       return data;
     }
     catch(e:any) {
-      throw new Error(e.message);
+      throw new Error("Server Internal Error");
     }
   }
   
@@ -87,7 +87,7 @@ export class TypeNilaiRepository {
       return data;
     }
     catch(e : any) {
-      throw new Error(e.message);
+      throw new Error("Server Internal Error");
     }
   }
 

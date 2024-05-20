@@ -20,7 +20,7 @@ export class DosenRepository {
       });
     }
     catch(e:any) {
-      throw new Error(e.message);
+      throw new Error("Server Internal Error");
     }
   }
 
@@ -31,7 +31,7 @@ export class DosenRepository {
       })
     }
     catch(e:any) {
-      throw new Error(e.message);
+      throw new Error("Server Internal Error");
     }
   }
 
@@ -52,7 +52,7 @@ export class DosenRepository {
       return dosen
     }
     catch(e:any) {
-      throw new Error(e.message);
+      throw new Error("Server Internal Error");
     }
   }
 
@@ -66,7 +66,7 @@ export class DosenRepository {
       })
     }
     catch(e:any) {
-      throw new Error(e.message);
+      throw new Error("Server Internal Error");
     }
   }
 
@@ -98,7 +98,7 @@ export class DosenRepository {
       }
       return dosen
     } catch (e: any) {
-      throw new Error("amada");
+      throw new Error("Server Internal Error");
     }
   }
 

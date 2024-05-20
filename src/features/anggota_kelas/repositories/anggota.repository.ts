@@ -56,7 +56,7 @@ export class Anggotarepository {
       return this.convertResponse(data);
     }
     catch(e) {
-      throw new Error((e as Error).message)
+      throw new Error("Server Internal Error")
     }
   }
 
@@ -83,7 +83,7 @@ export class Anggotarepository {
       return this.convertResponse(data);
     }
     catch(e) {
-      throw new Error((e as Error).message)
+      throw new Error("Server Internal Error")
     }
   }
 
@@ -109,7 +109,7 @@ export class Anggotarepository {
       return this.convertResponse(data);
     }
     catch(e) {
-      throw new Error((e as Error).message)
+      throw new Error("Server Internal Error")
     }
   }
 
@@ -135,7 +135,7 @@ export class Anggotarepository {
       return data.map((anggota) => this.convertResponse(anggota));
     }
     catch(e) {
-      throw new Error((e as Error).message)
+      throw new Error("Server Internal Error")
     }
   }
 

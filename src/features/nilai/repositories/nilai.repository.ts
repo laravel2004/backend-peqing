@@ -42,7 +42,7 @@ export class NilaiRepository {
 
     }
     catch(e) {
-      throw new Error((e as Error).message);
+      throw new Error("Server Internal Error");
     }
   } 
 
@@ -86,7 +86,7 @@ export class NilaiRepository {
       }))
     }
     catch(e) {
-      throw new Error((e as Error).message)
+      throw new Error("Server Internal Error")
     }
   }
 
@@ -123,7 +123,7 @@ export class NilaiRepository {
       }))
     }
     catch(e) {
-      throw new Error((e as Error).message);
+      throw new Error("Server Internal Error");
     }
   }
 
@@ -161,7 +161,7 @@ export class NilaiRepository {
       }
     }
     catch(e) {
-      throw new Error((e as Error).message)
+      throw new Error("Server Internal Error")
     }
   }
 
@@ -199,7 +199,7 @@ export class NilaiRepository {
 
     }
     catch(e) {
-      throw new Error((e as Error).message)
+      throw new Error("Server Internal Error")
     }
   }
 

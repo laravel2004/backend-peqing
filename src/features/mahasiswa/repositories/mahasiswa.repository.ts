@@ -18,7 +18,7 @@ export class MahasiswaRepository {
         },
       });
     } catch (e: any) {
-      throw new Error(e.message);
+      throw new Error("Server Internal Error");
     }
   }
 
@@ -28,7 +28,7 @@ export class MahasiswaRepository {
         data: mahasiswa
       });
     } catch (e: any) {
-      throw new Error(e.message);
+      throw new Error("Server Internal Error");
     }
   }
 
@@ -47,7 +47,7 @@ export class MahasiswaRepository {
       }
       return mahasiswa
     } catch (e: any) {
-      throw new Error(e.message);
+      throw new Error("Server Internal Error");
     }
   }
 
@@ -74,7 +74,7 @@ export class MahasiswaRepository {
       })
     }
     catch(e:any) {
-      throw new Error(e.message);
+      throw new Error("Server Internal Error");
     }
   }
 
@@ -94,7 +94,7 @@ export class MahasiswaRepository {
       }
       return mahasiswa
     } catch (e: any) {
-      throw new Error("afnjahbfaj");
+      throw new Error("Server Internal Error");
     }
   }
 }

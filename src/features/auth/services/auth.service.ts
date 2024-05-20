@@ -64,7 +64,7 @@ export class AuthService {
       
     }
     catch(e) {
-      throw new Error('Server Internal Error');
+      throw new Error((e as Error).message);
     }
   }
 
@@ -104,7 +104,7 @@ export class AuthService {
       }
     }
     catch(e) {
-      throw new Error('Server Internal Error');
+      throw new Error((e as Error).message);
     }
   }
 
@@ -146,7 +146,7 @@ export class AuthService {
       }
     }
     catch(e) {
-      throw new Error('Server Internal Error');
+      throw new Error((e as Error).message);
     }
   }
 

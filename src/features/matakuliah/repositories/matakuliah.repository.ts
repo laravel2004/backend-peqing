@@ -15,7 +15,7 @@ export class MatakuliahRepository {
       return await this.prisma.matakuliah.findMany();
     }
     catch(e:any) {
-      throw new Error(e.message);
+      throw new Error("Server Internal Error");
     }
   }
 
@@ -32,7 +32,7 @@ export class MatakuliahRepository {
       return data;
     }
     catch(e:any) {
-      throw new Error(e.message);
+      throw new Error("Server Internal Error");
     }
   }
 
@@ -44,7 +44,7 @@ export class MatakuliahRepository {
       return data;
     }
     catch(e:any) {
-      throw new Error(e.message);
+      throw new Error("Server Internal Error");
     }
   }
 
@@ -58,7 +58,7 @@ export class MatakuliahRepository {
       });
     }
     catch(e:any) {
-      throw new Error(e.message);
+      throw new Error("Server Internal Error");
     }
   }
 
@@ -71,7 +71,7 @@ export class MatakuliahRepository {
       })
     }
     catch(e:any) {
-      throw new Error(e.message);
+      throw new Error("Server Internal Error");
     }
   }
 

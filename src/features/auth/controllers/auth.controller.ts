@@ -17,7 +17,7 @@ export class AuthController {
       const token = await this.authService.login({ email, password });
       return res.status(200).json({
         message: token,
-        status: "success",
+        status: "succes",
       })
     }
     catch(e:any) {
@@ -38,11 +38,11 @@ export class AuthController {
         console.log(token)
         return res.status(200).json({
           message: token,
-          status: "success",
+          status: "succes",
         })
       }
       return res.status(404).json({
-        message: "Data not found",
+        message: "field not complete",
         status: "error"
       })
     }
@@ -60,7 +60,7 @@ export class AuthController {
       const token = headers?.split(" ")[1];
       const user = await this.authService.me(token as string);
       return res.status(200).json({
-        status : "success",
+        status : "succes",
         message : user
       })
     }

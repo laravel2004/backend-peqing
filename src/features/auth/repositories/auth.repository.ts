@@ -10,16 +10,22 @@ export class AuthRepository {
     this.prisma = new PrismaClient();
   }
 
-  async login (email : string) : Promise<User | null> {
+  async login (email : string) : Promise<User> {
     try {
-      return await this.prisma.user.findUnique({
+      const data =  await this.prisma.user.findUnique({
         where: {
           email: email,
         }
       })
+
+      if(!data) {
+        throw new Error('User not found');
+      }
+
+      return data
     }
     catch(e) {
-      throw new Error('User not found');
+      throw new Error((e as Error).message);
     }
   }
 
@@ -31,7 +37,7 @@ export class AuthRepository {
       })
     }
     catch(e:Error | any) {
-      throw new Error(e);
+      throw new Error("Server Internal Error");
     }
   }
 
@@ -77,7 +83,7 @@ export class AuthRepository {
       })
     }
     catch(e:any) {
-      throw new Error(e.message);
+      throw new Error("Server Internal Error");
     }
   }
 
