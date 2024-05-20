@@ -38,12 +38,12 @@ export class AuthRepository {
         }
       })
 
-      if(!exist) {
-        return await this.prisma.user.create({
-          data: user
-        })
+      if(exist) {
+        throw new Error("User already exist");
       }
-      throw new Error("User already exist");
+      return await this.prisma.user.create({
+        data: user
+      })
     }
     catch(e:Error | any) {
       throw new Error("Server Internal Error");
