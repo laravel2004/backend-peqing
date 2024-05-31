@@ -26,10 +26,6 @@ export class KelasService {
       return {
         id : kelas.id,
         name : kelas.name,
-        matakuliah : {
-          id : kelas.matakuliah.id,
-          name : kelas.matakuliah.name,
-        },
         dosen : {
           id : kelas.dosen.id,
           nip : kelas.dosen.nip,
@@ -52,10 +48,6 @@ export class KelasService {
     return data.map((kelas) => ({
       id : kelas.id,
         name : kelas.name,
-        matakuliah : {
-          id : kelas.matakuliah.id,
-          name : kelas.matakuliah.name,
-        },
         dosen : {
           id : kelas.dosen.id,
           nip : kelas.dosen.nip,

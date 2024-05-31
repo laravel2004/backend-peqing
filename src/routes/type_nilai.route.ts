@@ -8,7 +8,7 @@ const typeNilaiController = new TypeNilaiController();
 typeNilaiRouter.get('/', typeNilaiController.getAll.bind(typeNilaiController));
 typeNilaiRouter.get('/:id', typeNilaiController.findId.bind(typeNilaiController));
 
-typeNilaiRouter.get('/matakuliah/:id', typeNilaiController.findByKelasId.bind(typeNilaiController));
+typeNilaiRouter.get('/kelas/:id', typeNilaiController.findByKelasId.bind(typeNilaiController));
 
 typeNilaiRouter.post('/', typeNilaiController.create.bind(typeNilaiController));
 typeNilaiRouter.patch('/:id', typeNilaiController.update.bind(typeNilaiController));

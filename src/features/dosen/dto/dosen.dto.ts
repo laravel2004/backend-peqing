@@ -1,6 +1,6 @@
 export type DosenDto = {
   nip : string
-  userId : number
+  id : number
   user : {
     id : number
     name : string

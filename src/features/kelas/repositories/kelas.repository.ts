@@ -31,7 +31,6 @@ export class KelasRepository {
               user : true
             },
           },
-          matakuliah : true
         }
       })
 
@@ -48,7 +47,6 @@ export class KelasRepository {
     try {
       const kelas = await this.prisma.kelas.findMany({
         include : {
-          matakuliah : true,
           dosen : {
             include : {
               user : true
@@ -71,7 +69,6 @@ export class KelasRepository {
       const data = await this.prisma.kelas.create({
         data : kelas,
         include : {
-          matakuliah : true,
           dosen : {
             include : {
               user : true
@@ -82,10 +79,6 @@ export class KelasRepository {
       return {
         id : data.id,
         name : data.name,
-        matakuliah : {
-          id : data.matakuliah.id,
-          name : data.matakuliah.name
-        },
         dosen : {
           id : data.dosen.id,
           nip : data.dosen.nip,
@@ -110,7 +103,6 @@ export class KelasRepository {
         },
         data : kelas,
         include : {
-          matakuliah : true,
           dosen : {
             include : {
               user : true
@@ -122,10 +114,6 @@ export class KelasRepository {
       return {
         id : data.id,
         name : data.name,
-        matakuliah : {
-          id : data.matakuliah.id,
-          name : data.matakuliah.name
-        },
         dosen : {
           id : data.dosen.id,
           nip : data.dosen.nip,
@@ -149,7 +137,6 @@ export class KelasRepository {
           id : id
         },
         include : {
-          matakuliah : true,
           dosen : {
             include : {
               user : true
@@ -161,10 +148,6 @@ export class KelasRepository {
       return {
         id : data.id,
         name : data.name,
-        matakuliah : {
-          id : data.matakuliah.id,
-          name : data.matakuliah.name
-        },
         dosen : {
           id : data.dosen.id,
           nip : data.dosen.nip,

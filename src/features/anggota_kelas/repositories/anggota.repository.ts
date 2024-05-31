@@ -17,10 +17,6 @@ export class Anggotarepository {
       kelas : {
         id : anggota.kelas.id,
         name : anggota.kelas.name,
-        matakuliah : {
-          id : anggota.kelas.matakuliah.id,
-          name : anggota.kelas.matakuliah.name
-        }
       },
       mahasiswa : {
         id : anggota.mahasiswa.id,
@@ -41,11 +37,7 @@ export class Anggotarepository {
       const data = await this.prisma.anggotaKelas.create({
         data : anggota,
         include : {
-          kelas : {
-            include : {
-              matakuliah : true
-            }
-          },
+          kelas : true,
           mahasiswa : {
             include : {
               user : true
@@ -68,11 +60,7 @@ export class Anggotarepository {
         },
         data : anggota,
         include : {
-          kelas : {
-            include : {
-              matakuliah : true
-            }
-          },
+          kelas : true,
           mahasiswa : {
             include : {
               user : true
@@ -94,11 +82,7 @@ export class Anggotarepository {
           id : id
         },
         include : {
-          kelas : {
-            include : {
-              matakuliah : true
-            }
-          },
+          kelas :true,
           mahasiswa : {
             include : {
               user : true
@@ -120,11 +104,7 @@ export class Anggotarepository {
           kelasId : kelasId
         },
         include : {
-          kelas : {
-            include : {
-              matakuliah : true
-            }
-          },
+          kelas :true,
           mahasiswa : {
             include : {
               user : true

@@ -80,7 +80,7 @@ export class AuthService {
 
       if(isMahasiswa) {
         return {
-          token : jwt.sign({ id: userExist.id }, process.env.JWT_SECRET as string, { expiresIn: '1h' }),
+          token : jwt.sign({ id: userExist.id }, process.env.JWT_SECRET as string, { expiresIn: '36h' }),
           role : 'mahasiswa'
         } ;
       }
@@ -93,13 +93,13 @@ export class AuthService {
       
       if(isDosen) {
         return {
-          token : jwt.sign({ id: userExist.id }, process.env.JWT_SECRET as string, { expiresIn: '1h' }),
+          token : jwt.sign({ id: userExist.id }, process.env.JWT_SECRET as string, { expiresIn: '36h' }),
           role : 'dosen'
         } ;
       }
 
       return {
-        token : jwt.sign({ id: userExist.id }, process.env.JWT_SECRET as string, { expiresIn: '1h' }),
+        token : jwt.sign({ id: userExist.id }, process.env.JWT_SECRET as string, { expiresIn: '36h' }),
         role : 'admin'
       }
     }

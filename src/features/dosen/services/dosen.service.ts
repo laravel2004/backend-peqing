@@ -80,7 +80,7 @@ export class DosenService {
       });
       return {
         nip: dosenCreated.nip,
-        userId: dosenCreated.userId,
+        id: dosenCreated.id,
         user: {
           id: userCreated.id,
           name: userCreated.name,
@@ -98,7 +98,7 @@ export class DosenService {
       const dosen = await this.dosenRepository.findId(id);
       return {
         nip: dosen.nip,
-        userId: dosen.userId,
+        id: dosen.id,
         user: {
           id: dosen.user.id,
           name: dosen.user.name,
@@ -117,7 +117,7 @@ export class DosenService {
       return dosens.map((dosen) => {
         return {
           nip: dosen.nip,
-          userId: dosen.userId,
+          id: dosen.id,
           user: {
             id: dosen.user.id,
             name: dosen.user.name,
@@ -190,7 +190,7 @@ export class DosenService {
       if(!data) throw new Error("Dosen Not Founds")
       return {
         nip : data.nip,
-        userId : data.userId,
+        id : data.id,
         user : {
           name : data.user.name,
           email : data.user.email,

@@ -3,10 +3,6 @@ export type AnggotaShowDto = {
   kelas : {
     id : number;
     name : string;
-    matakuliah : {
-      id : number,
-      name : string
-    }
   },
   mahasiswa : {
     id : number;

@@ -1,7 +1,6 @@
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
 import userRouter from "./routes/auth.route";
-import mkRouter from "./routes/matakuliah.route";
 import typeNilaiRouter from "./routes/type_nilai.route";
 import mahasiswaRouter from "./routes/mahasiswa.route";
 import dosenRouter from "./routes/dosen.route";
@@ -27,7 +26,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/static', express.static(path.join(__dirname, 'public')))
 app.use(express.json());
 app.use('/auth', userRouter);
-app.use('/matakuliah', authMiddleware.verifyToken, mkRouter);
 app.use('/type-nilai', authMiddleware.verifyToken, typeNilaiRouter);
 app.use('/mahasiswa', authMiddleware.verifyToken, mahasiswaRouter);
 app.use('/dosen', authMiddleware.verifyToken, dosenRouter);

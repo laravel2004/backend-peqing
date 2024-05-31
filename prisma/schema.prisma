@@ -22,11 +22,6 @@ model User {
   mahasiswa Mahasiswa?
 }
 
-model Matakuliah {
-  id Int @id @default(autoincrement())
-  name String
-  kelas Kelas[]
-}
 
 model Mahasiswa {
   id Int @id @default(autoincrement())
@@ -50,11 +45,9 @@ model Dosen {
 
 model Kelas {
   id Int @id @default(autoincrement())
-  matakuliahId Int
   name String
   dosenId Int
   dosen Dosen @relation(fields: [dosenId], references: [id])
-  matakuliah Matakuliah @relation(fields: [matakuliahId], references: [id])
   anggotaKelas AnggotaKelas[]
   typeNilai TypeNilai[]
   nilai Nilai[]

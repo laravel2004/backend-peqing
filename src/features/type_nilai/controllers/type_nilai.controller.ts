@@ -58,7 +58,7 @@ export class TypeNilaiController {
 
   async update(req : Request, res : Response) {
     try {
-      const { name, kelasId } = req.body
+      const { name } = req.body
       const { id } = req.params;
       if(!id || !name) return res.status(400).json({status : "error", message : "data not found"})
 

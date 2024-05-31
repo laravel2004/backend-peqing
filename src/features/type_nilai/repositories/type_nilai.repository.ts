@@ -45,6 +45,7 @@ export class TypeNilaiRepository {
 
   async update(tku : TypeNilaiUpdateDto) :Promise<TypeNilai> {
     try{
+      console.log(tku)
       return await this.prisma.typeNilai.update({
         where : {
           id : tku.id

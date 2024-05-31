@@ -60,8 +60,8 @@ export class KelasController {
 
   async create(req: Request, res: Response) {
     try {
-      const {matakuliahId, dosenId, name} = req.body;
-      if(!matakuliahId || !dosenId || !name) return res.status(400).json({
+      const {dosenId, name} = req.body;
+      if(!dosenId || !name) return res.status(400).json({
         status : "error",
         message : "field not completed"
       })
