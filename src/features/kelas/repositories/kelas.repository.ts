@@ -203,16 +203,16 @@ export class KelasRepository {
           }
         }
         });
-        return response.map((data) => ({
-          id : data.kelas.id,
-          name : data.kelas.name,
+        return response.map((kelas) => ({
+          id : kelas.kelas.id,
+          name : kelas.kelas.name,
           dosen : {
-            id : data.kelas.dosen.id,
-            nip : data.kelas.dosen.nip,
+            id : kelas.kelas.dosen.id,
+            nip : kelas.kelas.dosen.nip,
             user : {
-              name : data.kelas.dosen.user.name,
-              email : data.kelas.dosen.user.email,
-              id : data.kelas.dosen.user.id
+              name : kelas.kelas.dosen.user.name,
+              email : kelas.kelas.dosen.user.email,
+              id : kelas.kelas.dosen.user.id
             }
           }
         }))
