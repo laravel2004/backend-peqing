@@ -43,6 +43,14 @@ export class KelasService {
     }
   }
 
+  async findKelasByDosenId(id : number) : Promise<KelasShowDto[]> {
+    return await this.kelasRepository.findKelasByDosen(id);
+  }
+
+  async findKelasByMahasiswaId(id : number) : Promise<KelasShowDto[]> {
+    return await this.kelasRepository.findKelasByMahasiswa(id)
+  }
+
   async getWithDosenMatakuliah() : Promise<KelasShowDto[]> {
     const data = await this.kelasRepository.getWithDosenMatakuliah();
     return data.map((kelas) => ({

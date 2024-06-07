@@ -25,6 +25,40 @@ export class KelasController {
     }
   }
 
+  async findKelasByDosenId(req: Request, res : Response) {
+    try {
+      const {id} = req.params;
+      const data = await this.kelasService.findKelasByDosenId(Number(id));
+      return res.status(200).json({
+        status : "succes",
+        message : data
+      })
+    }
+    catch(e) {
+      return res.status(500).json({
+        status : "error",
+        message : (e as Error).message,
+      })
+    }
+  }
+
+  async findKelasByMahasiswaId(req: Request, res : Response) {
+    try {
+      const {id} = req.params;
+      const data = await this.kelasService.findKelasByMahasiswaId(Number(id));
+      return res.status(200).json({
+        status : "succes",
+        message : data
+      })
+    }
+    catch(e) {
+      return res.status(500).json({
+        status : "error",
+        message : (e as Error).message,
+      })
+    }
+  }  
+
   async getWithDosenMatakuliah (req: Request, res: Response) {
     try {
       const data = await this.kelasService.getWithDosenMatakuliah();

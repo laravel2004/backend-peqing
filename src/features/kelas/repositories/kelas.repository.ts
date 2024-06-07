@@ -164,4 +164,62 @@ export class KelasRepository {
     }
   }
 
+  async findKelasByDosen(id : number) : Promise<KelasShowDto[]> {
+    try{
+      const data = await this.prisma.kelas.findMany({
+        where : {
+          dosenId : id
+        },
+        include : {
+          dosen : {
+            include : {
+              user : true
+            }
+          }
+        },
+      })
+      return data;
+    }
+    catch(e) {
+      throw new Error("Server Internal Error");
+    }
+  }
+
+  async findKelasByMahasiswa(id : number) : Promise<KelasShowDto[]> {
+    try{
+      const response  = await this.prisma.anggotaKelas.findMany({
+        where : {
+          mahasiswaId : id
+        },
+        include : {
+          kelas : {
+            include : {
+              dosen : {
+                include : {
+                  user : true
+                }
+              }
+            },
+          }
+        }
+        });
+        return response.map((data) => ({
+          id : data.kelas.id,
+          name : data.kelas.name,
+          dosen : {
+            id : data.kelas.dosen.id,
+            nip : data.kelas.dosen.nip,
+            user : {
+              name : data.kelas.dosen.user.name,
+              email : data.kelas.dosen.user.email,
+              id : data.kelas.dosen.user.id
+            }
+          }
+        }))
+    }
+    catch(e) {
+      throw new Error("Server Internal Errror");
+    }
+  }
+
 }

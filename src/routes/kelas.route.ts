@@ -5,6 +5,8 @@ const kelasRouter = expess.Router();
 const kelasController = new KelasController();
 
 kelasRouter.get('/', kelasController.getAll.bind(kelasController));
+kelasRouter.get("/matakuliah/dosen/:id", kelasController.findKelasByDosenId.bind(kelasController));
+kelasRouter.get("/matakuliah/mahasiswa/:id", kelasController.findKelasByMahasiswaId.bind(kelasController));
 kelasRouter.get('/dosen-matakuliah', kelasController.getWithDosenMatakuliah.bind(kelasController));
 kelasRouter.get('/dosen-matakuliah/:id', kelasController.findWithDosenMatakuliah.bind(kelasController));
 kelasRouter.post('/', kelasController.create.bind(kelasController));

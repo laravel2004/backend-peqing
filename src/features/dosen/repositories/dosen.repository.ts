@@ -83,6 +83,12 @@ export class DosenRepository {
     }
   }
 
+  async findKelasDosen (id : number) {
+    return await this.prisma.kelas.findMany({
+      where : {dosenId : id}
+    })
+  }
+
   async findByUserId (id : number) : Promise<DosenDto> {
     try {
       const dosen = await this.prisma.dosen.findUnique({
