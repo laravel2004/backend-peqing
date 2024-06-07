@@ -71,7 +71,7 @@ export class TypeNilaiController {
       return res.status(200).json({status : "succes", message : data})
     }
     catch(e:any) {
-      return res.status(500).json({status : "error", message : e.message})
+      return res.status(500).json({status : "errorr", message : e.message})
     }
   }
 
